@@ -37,6 +37,7 @@ import com.example.features.irrigation.SmartIrrigationScreen
 import com.example.features.logistics.LogisticsScreen
 import com.example.features.market.MarketScreen
 import com.example.features.market.MarketViewModel
+import com.example.features.market.SellDecisionScreen
 import com.example.features.notifications.NotificationsScreen
 import com.example.features.onboarding.OnboardingScreen
 import com.example.features.outbreak.OutbreakRadarScreen
@@ -82,7 +83,7 @@ class MainActivity : ComponentActivity() {
                 val homeViewModel: HomeViewModel = viewModel { HomeViewModel(repository) }
                 val farmViewModel: FarmViewModel = viewModel { FarmViewModel(repository) }
                 val aiViewModel: FarmSathiAiViewModel = viewModel { FarmSathiAiViewModel(application, repository) }
-                val marketViewModel: MarketViewModel = viewModel { MarketViewModel(repository) }
+                val marketViewModel: MarketViewModel = viewModel { MarketViewModel(application, repository) }
                 val profileViewModel: ProfileViewModel = viewModel { ProfileViewModel(repository, authRepository) }
                 val authViewModel: AuthViewModel = viewModel { AuthViewModel(authRepository) }
 
@@ -318,6 +319,14 @@ class MainActivity : ComponentActivity() {
                             DigitalTwinScreen(
                                 repository = repository,
                                 onBack = { navController.popBackStack() }
+                            )
+                        }
+
+                        composable(Screen.SellDecision.route) {
+                            SellDecisionScreen(
+                                repository = repository,
+                                onBack = { navController.popBackStack() },
+                                onNavigateToAiChat = { navController.navigate(Screen.AgroSathiAi.route) }
                             )
                         }
 

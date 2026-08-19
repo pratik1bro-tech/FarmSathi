@@ -756,11 +756,11 @@ private fun FarmSathiAiUpdateCard(
 @Composable
 private fun QuickActionsSection(onNavigate: (Screen) -> Unit) {
     val quickActions = listOf(
+        QuickActionItem("Weather Intel", Icons.Default.CloudQueue, "Impact & Forecast", Screen.WeatherIntelligence, SkyWaterBlue),
         QuickActionItem("Scan Crop", Icons.Default.CameraAlt, "AI Leaf Doctor", Screen.DiseaseDetection, FarmPrimaryGreen),
         QuickActionItem("Irrigation", Icons.Default.WaterDrop, "Smart Valves", Screen.SmartIrrigation, FarmTechBlue),
         QuickActionItem("Soil Health", Icons.Default.Spa, "NPK & Lab", Screen.SoilHealth, FarmEarthBrown),
         QuickActionItem("Market", Icons.Default.TrendingUp, "Mandi Rates", Screen.Market, FarmHarvestGold),
-        QuickActionItem("Sell Harvest", Icons.Default.Handshake, "Direct Buyers", Screen.Buyers, FarmPrimaryLight),
         QuickActionItem("Ask AI", Icons.Default.AutoAwesome, "Voice Assistant", Screen.AgroSathiAi, FarmTechBlue)
     )
 
@@ -1183,13 +1183,26 @@ private fun MarketSummaryCard(
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            Text(
-                text = "📈 AI Trend: ${topItem.sellRecommendation}",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.primary,
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 11.sp
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "📈 AI Trend: ${topItem.sellRecommendation}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.primary,
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 11.sp
+                )
+
+                Text(
+                    text = "Decision Engine →",
+                    style = MaterialTheme.typography.labelSmall,
+                    fontWeight = FontWeight.Bold,
+                    color = FarmTechBlue
+                )
+            }
         }
     }
 }

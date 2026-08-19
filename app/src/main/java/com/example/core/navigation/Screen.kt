@@ -26,5 +26,6 @@ sealed class Screen(val route: String, val title: String) {
     object Logistics : Screen("logistics", "Smart Logistics")
     object OutbreakRadar : Screen("outbreak_radar", "Outbreak Radar")
     object DigitalTwin : Screen("digital_twin", "Farm Digital Twin")
+    object SellDecision : Screen("sell_decision", "Sell Now or Wait")
     object Notifications : Screen("notifications", "Notifications")
 }
