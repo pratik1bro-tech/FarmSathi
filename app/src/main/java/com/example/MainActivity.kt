@@ -311,7 +311,8 @@ class MainActivity : ComponentActivity() {
                         composable(Screen.OutbreakRadar.route) {
                             OutbreakRadarScreen(
                                 repository = repository,
-                                onBack = { navController.popBackStack() }
+                                onBack = { navController.popBackStack() },
+                                onProtectMyFarm = { navController.navigate(Screen.DiseaseDetection.route) }
                             )
                         }
 
@@ -333,7 +334,8 @@ class MainActivity : ComponentActivity() {
                         composable(Screen.Notifications.route) {
                             NotificationsScreen(
                                 repository = repository,
-                                onBack = { navController.popBackStack() }
+                                onBack = { navController.popBackStack() },
+                                onNavigateToDeepLink = { route -> navController.navigate(route) }
                             )
                         }
                     }

@@ -32,7 +32,11 @@ data class FarmAiMessage(
     val reason: String? = null,
     val recommendedActions: List<FarmAiAction> = emptyList(),
     val sourceRoute: String? = null,
-    val audioAvailable: Boolean = true
+    val audioAvailable: Boolean = true,
+    val warnings: List<String> = emptyList(),
+    val supportingData: Map<String, String> = emptyMap(),
+    val uncertainty: String? = null,
+    val executionMetadata: BackendExecutionMetadata? = null
 )
 
 data class FarmIntelligenceContext(

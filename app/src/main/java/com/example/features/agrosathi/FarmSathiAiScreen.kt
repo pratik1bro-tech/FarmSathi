@@ -510,9 +510,41 @@ private fun AssistantAiCard(
                 lineHeight = 22.sp
             )
 
-            // Reasoning Section Box
-            if (!message.reason.isNullOrBlank()) {
-                Spacer(modifier = Modifier.height(12.dp))
+            // Warnings Box (if any)
+            if (message.warnings.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(10.dp))
+                Surface(
+                    shape = FarmSathiDesign.shapes.medium,
+                    color = FarmAlertRedContainer,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .border(1.dp, FarmAlertRed.copy(alpha = 0.4f), FarmSathiDesign.shapes.medium)
+                ) {
+                    Column(modifier = Modifier.padding(10.dp)) {
+                        Text(
+                            text = "⚠️ ACTIVE WARNINGS / ADVISORIES:",
+                            style = MaterialTheme.typography.labelSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = FarmAlertRed,
+                            fontSize = 9.sp,
+                            letterSpacing = 0.5.sp
+                        )
+                        Spacer(modifier = Modifier.height(4.dp))
+                        message.warnings.forEach { warning ->
+                            Text(
+                                text = "• $warning",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurface,
+                                fontSize = 11.sp
+                            )
+                        }
+                    }
+                }
+            }
+
+            // Supporting Data & Uncertainty Grid
+            if (message.supportingData.isNotEmpty() || !message.uncertainty.isNullOrBlank()) {
+                Spacer(modifier = Modifier.height(10.dp))
                 Surface(
                     shape = FarmSathiDesign.shapes.medium,
                     color = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.7f),
@@ -520,37 +552,78 @@ private fun AssistantAiCard(
                         .fillMaxWidth()
                         .border(1.dp, MaterialTheme.colorScheme.outlineVariant, FarmSathiDesign.shapes.medium)
                 ) {
-                    Row(
-                        modifier = Modifier.padding(10.dp),
-                        verticalAlignment = Alignment.Top
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Analytics,
-                            contentDescription = "Reason",
-                            tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier
-                                .size(16.dp)
-                                .padding(top = 2.dp)
+                    Column(modifier = Modifier.padding(10.dp)) {
+                        Text(
+                            text = "📊 SUPPORTING TELEMETRY & CONFIDENCE",
+                            style = MaterialTheme.typography.labelSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.primary,
+                            fontSize = 9.sp,
+                            letterSpacing = 0.5.sp
                         )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Column {
+                        Spacer(modifier = Modifier.height(6.dp))
+
+                        message.supportingData.forEach { (key, value) ->
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(
+                                    text = key,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                    fontSize = 11.sp
+                                )
+                                Text(
+                                    text = value,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                    fontSize = 11.sp
+                                )
+                            }
+                        }
+
+                        if (!message.uncertainty.isNullOrBlank()) {
+                            Spacer(modifier = Modifier.height(6.dp))
                             Text(
-                                text = "UNDERLYING TELEMETRY & REASON",
+                                text = "🎯 Model Uncertainty: ${message.uncertainty}",
                                 style = MaterialTheme.typography.labelSmall,
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.primary,
-                                fontSize = 9.sp,
-                                letterSpacing = 0.5.sp
-                            )
-                            Spacer(modifier = Modifier.height(2.dp))
-                            Text(
-                                text = message.reason,
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                fontSize = 11.sp,
-                                lineHeight = 16.sp
+                                color = FarmTechBlue,
+                                fontSize = 10.sp,
+                                fontWeight = FontWeight.SemiBold
                             )
                         }
+                    }
+                }
+            }
+
+            // Secure Backend Execution Metadata (Firebase Auth & Proxy Status)
+            message.executionMetadata?.let { meta ->
+                Spacer(modifier = Modifier.height(8.dp))
+                Surface(
+                    shape = FarmSathiDesign.shapes.pill,
+                    color = FarmTechBlueContainer,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "🔒 ${meta.authStatus} | ${meta.geminiSecurityMode}",
+                            style = MaterialTheme.typography.labelSmall,
+                            fontSize = 9.sp,
+                            color = FarmTechBlue,
+                            fontWeight = FontWeight.Bold
+                        )
+                        Text(
+                            text = "${meta.latencyMs}ms",
+                            style = MaterialTheme.typography.labelSmall,
+                            fontSize = 9.sp,
+                            color = FarmTechBlue
+                        )
                     }
                 }
             }

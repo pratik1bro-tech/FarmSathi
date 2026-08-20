@@ -25,16 +25,18 @@ data class FarmSathiAiUiState(
     val activeLanguage: String = "hi",
     val isOffline: Boolean = false,
     val suggestedQuestions: List<String> = listOf(
+        "What should I do today?",
+        "How is my farm?",
+        "Should I irrigate?",
+        "Is my crop at risk?",
+        "Should I sell now?",
+        "Which buyer is best?",
+        "What will happen if I delay irrigation?",
+        "आज क्या करना चाहिए?",
         "मेरी फसल की हालत कैसी है?",
         "क्या आज सिंचाई करनी चाहिए?",
         "इंदौर मंडी में सोयाबीन का भाव क्या है?",
-        "What should I do today?",
-        "How is my farm?",
-        "Should I irrigate today?",
-        "Is my crop healthy?",
-        "Should I sell my soybean?",
-        "What is the mandi price?",
-        "What are my biggest risks?"
+        "सबसे अच्छा खरीदार कौन सा है?"
     ),
     val context: FarmIntelligenceContext = FarmIntelligenceContext()
 )
